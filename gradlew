@@ -34,7 +34,7 @@ fi
 MAX_FD=maximum
 
 # Collect arguments
-DEFAULT_JVM_OPTS="-Xmx64m -Xms64m" 
+DEFAULT_JVM_OPTS="-Xmx64m -Xms64m"
 
 set -- \
         "-Dorg.gradle.appname=$APP_BASE_NAME" \
