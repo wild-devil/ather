@@ -34,9 +34,15 @@ object IpUtils {
                 "-" in t -> {
                     val (a, b) = t.split("-", limit = 2)
                     val start = ipToLong(a.trim())
-                    val end = if ("." in b) ipToLong(b.trim()) else {
-                        val base = start?.and(0xFFFFFF00L) ?: return@let
-                        base or (b.trim().toLongOrNull() ?: return@let)
+                    val end = if ("." in b) {
+                        ipToLong(b.trim())
+                    } else {
+                        val lastOctet = b.trim().toLongOrNull()
+                        if (start == null || lastOctet == null || lastOctet !in 0..255) {
+                            null
+                        } else {
+                            (start and 0xFFFFFF00L) or lastOctet
+                        }
                     }
                     if (start != null && end != null && end >= start) {
                         out.add(Range(start, end))
